@@ -1,7 +1,52 @@
 package com.bonvivant;
 
+import java.util.Random;
+
+import com.bonvivant.enums.MenuType;
+import com.bonvivant.restaurant.Menu;
+import com.bonvivant.restaurant.Restaurant;
+import com.bonvivant.restaurant.FoodItem;
+import com.bonvivant.system.BonVivantRestaurantDriver;
+import com.bonvivant.system.RestaurantManager;
+
 public class BonVivantMainApp {
     public static void main(String [] args){
         System.out.println("Initializing Food Ordering System...");
+        /**
+         * Initiating restaurant driver
+         */
+        BonVivantRestaurantDriver bonVivantRestaurantDriver = BonVivantRestaurantDriver.getInstance();
+
+        RestaurantManager restaurantManager = bonVivantRestaurantDriver.getRestaurantManager();
+
+        try {
+            Menu r1Menu = new Menu();
+            r1Menu.addFoodItem(new FoodItem("BigFry", MenuType.VEG, 100.0));
+            r1Menu.addFoodItem(new FoodItem("BigFish", MenuType.NONVEG, 200.0));
+            r1Menu.addFoodItem(new FoodItem("BigFryFish", MenuType.NONVEG, 400.0));
+
+            Restaurant restaurant1 = new Restaurant("HelloFoodie", getRandomCapacity(), r1Menu);
+
+            restaurantManager.addRestaunrant(restaurant1);
+
+            Restaurant restaurant2 = new Restaurant("HelloFoodie", getRandomCapacity());
+            restaurant2.setMenu(r1Menu);
+            restaurantManager.addRestaunrant(restaurant2);
+
+            Restaurant restaurant3 = new Restaurant("I_AM_HUNGRY", getRandomCapacity());
+            r1Menu.updateFoodItem(new FoodItem("BigFryFish", MenuType.NONVEG, 300.0));
+            restaurant3.setMenu(r1Menu);
+            restaurantManager.addRestaunrant(restaurant3);
+
+            System.out.println(restaurantManager.findRestaurant("HelloFoodie"));
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    static Integer getRandomCapacity() {
+        Integer MAX_CAPACITY = 10;
+        return (new Random().nextInt(MAX_CAPACITY) + 1);
     }
 }
