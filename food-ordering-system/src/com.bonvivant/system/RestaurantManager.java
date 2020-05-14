@@ -1,5 +1,6 @@
 package system;
 
+import enums.RestaurantStatus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +47,7 @@ public class RestaurantManager {
         return null;
     }
 
-    public Restaurant findBy(HashMap<FoodItem, Integer> orderedItems) throws BonVivantException {
+    public Restaurant findBy(HashMap<String, Integer> orderedItems) throws BonVivantException {
         // TBD
         Restaurant restaurant = new RestaurantFinder()
             .useStrategy(new LowestPriceRestaurantStrategy())
@@ -63,8 +64,11 @@ public class RestaurantManager {
         throw new BonVivantException("Restaurnt not present with this name" + restaurant.getName());
     }
 
-    public ArrayList<Restaurant> getAllRestaurant() {
-        return restaurantMap.values().stream().collect(Collectors.toCollection(ArrayList::new));
+    public ArrayList<Restaurant> getAvailableRestaurants() {
+        return restaurantMap.values()
+            .stream()
+            .filter(x -> x.canAcceptOrder() && x.getStatus() == RestaurantStatus.OPEN)
+            .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public List getOrderHistory(Restaurant restaurant){

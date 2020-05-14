@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Random;
 import enums.MenuType;
 import restaurant.Menu;
@@ -26,16 +27,29 @@ public class BonVivantMainApp {
 
             restaurantManager.addRestaunrant(restaurant1);
 
-            Restaurant restaurant2 = new Restaurant("HelloFoodie", getRandomCapacity());
-            restaurant2.setMenu(r1Menu);
+            Restaurant restaurant2 = new Restaurant.Builder("FoodieFoody").setCapacity(getRandomCapacity()).build();
+            Menu r2Menu = new Menu();
+            r2Menu.addFoodItem(new FoodItem("BigFry", MenuType.VEG, 100.0));
+            r2Menu.addFoodItem(new FoodItem("BigFish", MenuType.NONVEG, 200.0));
+            restaurant2.setMenu(r2Menu);
             restaurantManager.addRestaunrant(restaurant2);
 
-            Restaurant restaurant3 = new Restaurant("I_AM_HUNGRY", getRandomCapacity());
-            r1Menu.updateFoodItem(new FoodItem("BigFryFish", MenuType.NONVEG, 300.0));
-            restaurant3.setMenu(r1Menu);
+            Restaurant restaurant3 = new Restaurant.Builder("I_AM_HUNGRY").setCapacity(getRandomCapacity()).build();
+            Menu r3Menu = new Menu();
+            r3Menu.addFoodItem(new FoodItem("BigFry", MenuType.VEG, 100.0));
+            r3Menu.addFoodItem(new FoodItem("BigFish", MenuType.NONVEG, 200.0));
+            r3Menu.addFoodItem(new FoodItem("BigFryFish", MenuType.NONVEG, 300.0));
+            restaurant3.setMenu(r3Menu);
             restaurantManager.addRestaunrant(restaurant3);
 
             System.out.println(restaurantManager.findRestaurant("HelloFoodie"));
+            // Find restaurant by order items
+
+            HashMap<String, Integer> orderItems = new HashMap<>();
+            orderItems.put("BigFish", 2);
+            orderItems.put("BigFryFish", 2);
+
+            System.out.println(restaurantManager.findBy(orderItems).getName());
         }catch (Exception ex){
             System.out.println(ex.getMessage());
         }

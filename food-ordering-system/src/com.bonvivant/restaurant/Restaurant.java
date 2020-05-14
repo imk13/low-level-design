@@ -1,5 +1,6 @@
 package restaurant;
 
+import constants.BonVivantConstants;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,19 +21,63 @@ public class Restaurant {
     private Deque<Order> orderProcessingQueue;
     private HashMap<UUID, Order> orderHistory;
 
-    public Restaurant(String name,Integer capacity) {
-        this.name = name;
-        this.capacity = capacity;
+    /**
+     * Using Builder Pattern
+     * @param builder
+     */
+    private Restaurant(Builder builder) {
         this.id = Utils.generateUUID();
-        this.menu = new Menu();
+        this.name = builder.name;
+        this.menu = builder.menu;
+        this.capacity = builder.capacity;
+        this.status = builder.status;
+        this.menu = builder.menu;
         this.orderHistory = new HashMap<>();
         this.orderProcessingQueue = new LinkedList<>();
     }
+
+    /**
+     * Builder class for creating Restaurant instance
+     */
+    public static class Builder{
+        private String name;
+        private Menu menu;
+        private RestaurantStatus status;
+        private Integer capacity;
+
+        public Builder(String name) {
+            this.name = name;
+            this.status = RestaurantStatus.OPEN;
+            this.capacity = BonVivantConstants.DEFAULT_MAX_RESTAURANT_CAPACITY;
+        }
+
+        public Builder setStatus(RestaurantStatus status){
+            this.status = status;
+            return this;
+        }
+
+        public Builder setCapacity(Integer capacity){
+            this.capacity = capacity;
+            return this;
+        }
+
+        public Builder setMenu(Menu menu){
+            this.menu = menu;
+            return this;
+        }
+
+
+        public Restaurant build(){
+            return new Restaurant(this);
+        }
+    };
+
     public Restaurant(String name,Integer capacity, Menu restaurantMenu) {
         this.name = name;
         this.capacity = capacity;
         this.id = UUID.randomUUID();
         this.menu = restaurantMenu;
+        this.status = RestaurantStatus.OPEN;
         this.orderHistory = new HashMap<>();
         this.orderProcessingQueue = new LinkedList<>();
     }

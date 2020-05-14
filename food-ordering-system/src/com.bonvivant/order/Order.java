@@ -54,6 +54,10 @@ public class Order {
         return items.keySet().stream().collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public HashMap<FoodItem, Integer> getItems() {
+        return items;
+    }
+
     /**
      * @return the placedAt
      */

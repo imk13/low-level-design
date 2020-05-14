@@ -18,7 +18,7 @@ public class RestaurantFinder {
         return this;
     }
 
-    public Restaurant findRestaurant(HashMap<FoodItem, Integer> orderedItems)
+    public Restaurant findRestaurant(HashMap<String, Integer> orderedItems)
         throws BonVivantException {
         if(_restaurantSelectionStratgey == null){
             throw new BonVivantException("IRestaurantSelectionStratgey strategy is not set.");

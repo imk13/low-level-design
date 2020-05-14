@@ -11,7 +11,6 @@ public class Menu {
     private HashMap<MenuType, HashMap<String, FoodItem>> menuMap;
 
     public Menu(){
-        menuMap = new HashMap<>();
         resetMenu();
     }
     /**
@@ -31,13 +30,16 @@ public class Menu {
             //throw new BonVivantException("FoodItem menu category is missing.");
             return;
         }
+        if(menuMap.get(item.getCategory()) == null){
+            menuMap.put(item.getCategory(), new HashMap<>());
+        }
         menuMap.get(item.getCategory()).put(item.getName(), item);
     }
 
     public FoodItem findFoodItem(String itemName){
         for(MenuType menuType: MenuType.values()){
             HashMap<String, FoodItem> foodMenuMap = menuMap.get(menuType);
-            if(foodMenuMap.containsKey(itemName)){
+            if(foodMenuMap != null && foodMenuMap.containsKey(itemName)){
                 return foodMenuMap.get(itemName);
             }
         }
@@ -66,16 +68,12 @@ public class Menu {
         menuMap.get(delFoodItem.getCategory()).remove(delFoodItem.getName());
     }
 
-
-
     public void removeAll(){
         resetMenu();
     }
 
     private void resetMenu(){
-        for(MenuType menuType: MenuType.values()){
-            menuMap.put(menuType, new HashMap<String, FoodItem>());
-        }
+        menuMap = new HashMap<>();
     }
 
 }
