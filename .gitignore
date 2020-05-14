@@ -6,6 +6,7 @@
 
 #editor dirs
 .vscode
+.idea
 
 # System files
 DS_Store
