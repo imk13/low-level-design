@@ -1,11 +1,11 @@
-package com.bonvivant.service;
+package service;
 
-import com.bonvivant.restaurant.Restaurant;
+import restaurant.Restaurant;
 
 import java.util.HashMap;
 
-import com.bonvivant.exceptions.BonVivantException;
-import com.bonvivant.restaurant.FoodItem;
+import exceptions.BonVivantException;
+import restaurant.FoodItem;
 
 public class RestaurantFinder {
     private IRestaurantSelectionStratgey _restaurantSelectionStratgey;
@@ -13,15 +13,16 @@ public class RestaurantFinder {
     public RestaurantFinder(){
     }
 
-    public useStrategy(IRestaurantSelectionStratgey stratgey){
+    public RestaurantFinder useStrategy(IRestaurantSelectionStratgey stratgey){
         _restaurantSelectionStratgey = stratgey;
         return this;
     }
 
-    public Restaurant findRestaurant(HashMap<FoodItem, Integer> orderedItems, List<Restaurant> allRestaurants){
+    public Restaurant findRestaurant(HashMap<FoodItem, Integer> orderedItems)
+        throws BonVivantException {
         if(_restaurantSelectionStratgey == null){
             throw new BonVivantException("IRestaurantSelectionStratgey strategy is not set.");
         }
-        return _restaurantSelectionStratgey.findBy(orderedItems, allRestaurants);
+        return _restaurantSelectionStratgey.findBy(orderedItems);
     }
 }

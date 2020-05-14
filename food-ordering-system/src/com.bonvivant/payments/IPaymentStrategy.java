@@ -1,6 +1,6 @@
-package com.bonvivant.payments;
+package payments;
 
-import com.bonvivant.order.Order;
+import order.Order;
 
 public interface IPaymentStrategy {
     void pay(Order order);

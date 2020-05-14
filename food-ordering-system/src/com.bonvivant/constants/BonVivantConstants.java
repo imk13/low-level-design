@@ -1,5 +1,5 @@
-package com.bonvivant.constants;
+package constants;
 
-public static class BonVivantConstants {
+public class BonVivantConstants {
 
 }

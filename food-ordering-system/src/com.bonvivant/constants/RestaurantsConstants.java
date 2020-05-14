@@ -1,5 +1,4 @@
-package com.bonvivant.constants;
+package constants;
 
-public static class RestaurantsConstants {
-
+public class RestaurantsConstants {
 }

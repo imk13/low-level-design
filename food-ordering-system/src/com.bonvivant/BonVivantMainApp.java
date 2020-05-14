@@ -1,13 +1,10 @@
-package com.bonvivant;
-
 import java.util.Random;
-
-import com.bonvivant.enums.MenuType;
-import com.bonvivant.restaurant.Menu;
-import com.bonvivant.restaurant.Restaurant;
-import com.bonvivant.restaurant.FoodItem;
-import com.bonvivant.system.BonVivantRestaurantDriver;
-import com.bonvivant.system.RestaurantManager;
+import enums.MenuType;
+import restaurant.Menu;
+import restaurant.Restaurant;
+import restaurant.FoodItem;
+import system.BonVivantRestaurantDriver;
+import system.RestaurantManager;
 
 public class BonVivantMainApp {
     public static void main(String [] args){

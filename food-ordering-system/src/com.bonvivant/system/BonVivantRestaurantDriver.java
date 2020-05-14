@@ -1,4 +1,4 @@
-package com.bonvivant.system;
+package system;
 
 /**
  * BonVivantRestaurantDriver is just a wrapper class for RestaurantManager

@@ -1,15 +1,18 @@
-package com.bonvivant.service;
+package service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.bonvivant.restaurant.FoodItem;
-import com.bonvivant.restaurant.Restaurant;
+import restaurant.FoodItem;
+import restaurant.Restaurant;
+import system.RestaurantManager;
 
 public class LowestPriceRestaurantStrategy implements IRestaurantSelectionStratgey {
-    
+
     @Override
-    public Restaurant findBy(HashMap<FoodItem, Integer> orderedItems, List<Restaurant> allRestaurants){
-        return allRestaurants.get(0);
+    public Restaurant findBy(HashMap<FoodItem, Integer> orderedItems) {
+        ArrayList<Restaurant> restaurants= RestaurantManager.getInstance().getAllRestaurant();
+        return null;
     }
 }

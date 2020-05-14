@@ -1,13 +1,12 @@
-package com.bonvivant.order;
+package order;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-
-import com.bonvivant.enums.OrderStatus;
-import com.bonvivant.helper.utils;
-import com.bonvivant.restaurant.FoodItem;
-import com.bonvivant.restaurant.Restaurant;
+import enums.OrderStatus;
+import java.util.stream.Collectors;
+import restaurant.FoodItem;
+import restaurant.Restaurant;
 
 public class Order {
     UUID id;
@@ -26,7 +25,7 @@ public class Order {
     }
 
     private Double calculateOrderAmount(HashMap<FoodItem, Integer> orderItems){
-        Double orderAmount = 0;
+        Double orderAmount = 0.0;
         for(FoodItem foodItem: orderItems.keySet()){
             // quantity * item price
             orderAmount += (orderItems.get(foodItem) * foodItem.getPrice());
@@ -52,7 +51,7 @@ public class Order {
      * @return the orderItems
      */
     public ArrayList<FoodItem> getOrderItems() {
-        return items.values();
+        return items.keySet().stream().collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**

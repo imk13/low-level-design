@@ -1,6 +1,8 @@
-package com.bonvivant.helper;
+package helper;
 
-public static class utils {
+import java.util.UUID;
+
+public class Utils {
     public static UUID generateUUID() {
         return UUID.randomUUID();
     }

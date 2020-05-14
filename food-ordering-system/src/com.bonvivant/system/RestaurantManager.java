@@ -1,16 +1,16 @@
-package com.bonvivant.system;
+package system;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
-import com.bonvivant.exceptions.BonVivantException;
-import com.bonvivant.order.Order;
-import com.bonvivant.restaurant.Menu;
-import com.bonvivant.restaurant.Restaurant;
-import com.bonvivant.service.RestaurantFinder;
-import com.bonvivant.service.LowestPriceRestaurantStrategy;
+import exceptions.BonVivantException;
+import java.util.stream.Collectors;
+import order.Order;
+import restaurant.FoodItem;
+import restaurant.Restaurant;
+import service.RestaurantFinder;
+import service.LowestPriceRestaurantStrategy;
 
 public class RestaurantManager {
     private HashMap<String, Restaurant> restaurantMap;
@@ -23,7 +23,7 @@ public class RestaurantManager {
         this.restaurantOrdersHistory = new HashMap<>();
     }
 
-    static RestaurantManager getInstance(){
+    public static RestaurantManager getInstance(){
         if(instance == null){
             instance = new RestaurantManager();
         }
@@ -46,20 +46,25 @@ public class RestaurantManager {
         return null;
     }
 
-    public Restaurant findBy(HashMap<FoodItem, Integer> orderedItems){
+    public Restaurant findBy(HashMap<FoodItem, Integer> orderedItems) throws BonVivantException {
         // TBD
         Restaurant restaurant = new RestaurantFinder()
             .useStrategy(new LowestPriceRestaurantStrategy())
-            .findRestaurant(orderedItems, restaurantMap.values());
+            .findRestaurant(orderedItems);
+        return restaurant;
     }
 
-    public void removeRestaurant(Restaurant restaurant){
+    public void removeRestaurant(Restaurant restaurant) throws BonVivantException {
         if(restaurantMap.containsKey(restaurant.getName())){
             restaurantMap.remove(restaurant.getName());
             restaurantOrdersHistory.remove(restaurant.getName());
         }
 
         throw new BonVivantException("Restaurnt not present with this name" + restaurant.getName());
+    }
+
+    public ArrayList<Restaurant> getAllRestaurant() {
+        return restaurantMap.values().stream().collect(Collectors.toCollection(ArrayList::new));
     }
 
     public List getOrderHistory(Restaurant restaurant){
@@ -69,7 +74,7 @@ public class RestaurantManager {
         return null;
     }
 
-    public void placeOrder(Restaurant restaurant, Order order){
+    public void placeOrder(Restaurant restaurant, Order order) throws BonVivantException {
         order.setPlacedAt(restaurant.getId());
         if(restaurant.canAcceptOrder()){
             restaurant.addOrders(order);

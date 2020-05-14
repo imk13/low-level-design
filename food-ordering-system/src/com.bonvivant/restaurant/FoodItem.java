@@ -1,7 +1,8 @@
-package com.bonvivant.restaurant;
+package restaurant;
 
-import com.bonvivant.enums.ItemStatus;
-import com.bonvivant.enums.MenuType;
+import enums.ItemStatus;
+import enums.MenuType;
+import enums.MenuType;
 
 public class FoodItem {
     private String name;

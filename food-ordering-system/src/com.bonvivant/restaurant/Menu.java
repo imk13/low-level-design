@@ -1,9 +1,11 @@
-package com.bonvivant.restaurant;
+package restaurant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.bonvivant.enums.MenuType;
-import com.bonvivant.exceptions.BonVivantException;
+import enums.MenuType;
+import exceptions.BonVivantException;
+import java.util.List;
+import restaurant.FoodItem;
 
 public class Menu {
     private HashMap<MenuType, HashMap<String, FoodItem>> menuMap;
@@ -56,7 +58,7 @@ public class Menu {
         return foodItem;
     }
 
-    public void removeItem(String itemName){
+    public void removeItem(String itemName) throws BonVivantException {
         FoodItem delFoodItem = findFoodItem(itemName);
         if(delFoodItem == null){
             throw new BonVivantException("FoodItem does not exist.");

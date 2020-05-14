@@ -1,10 +1,10 @@
-package com.bonvivant.service;
+package service;
 
-import com.bonvivant.restaurant.Restaurant;
+import restaurant.Restaurant;
 
 import java.util.HashMap;
 
-import com.bonvivant.restaurant.FoodItem;
+import restaurant.FoodItem;
 
 public interface IRestaurantSelectionStratgey {
     public Restaurant findBy(HashMap<FoodItem, Integer> orderedItems);

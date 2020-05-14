@@ -1,4 +1,4 @@
-package com.bonvivant.exceptions;
+package exceptions;
 
 public class BonVivantException extends Exception{
     private static final long serialVersionUID = 1L;

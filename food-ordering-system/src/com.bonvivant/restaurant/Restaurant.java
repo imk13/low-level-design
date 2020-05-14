@@ -1,15 +1,15 @@
-package com.bonvivant.restaurant;
+package restaurant;
 
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.UUID;
 
-import com.bonvivant.enums.OrderStatus;
-import com.bonvivant.enums.RestaurantStatus;
-import com.bonvivant.exceptions.BonVivantException;
-import com.bonvivant.helper.utils;
-import com.bonvivant.order.Order;
+import enums.OrderStatus;
+import enums.RestaurantStatus;
+import exceptions.BonVivantException;
+import helper.Utils;
+import order.Order;
 
 public class Restaurant {
     private UUID id;
@@ -23,7 +23,7 @@ public class Restaurant {
     public Restaurant(String name,Integer capacity) {
         this.name = name;
         this.capacity = capacity;
-        this.id = UUID.randomUUID();
+        this.id = Utils.generateUUID();
         this.menu = new Menu();
         this.orderHistory = new HashMap<>();
         this.orderProcessingQueue = new LinkedList<>();
@@ -60,7 +60,11 @@ public class Restaurant {
      */
     public void removeFoodItem(FoodItem foodItem) {
         if(menu.findFoodItem(foodItem.getName()) != null){
-            menu.removeItem(foodItem.getName());
+            try {
+                menu.removeItem(foodItem.getName());
+            } catch (BonVivantException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -104,25 +108,32 @@ public class Restaurant {
     }
 
     public Boolean canAcceptOrder(){
-        if(currentOrders.size() < capacity){
+        if(orderProcessingQueue.size() < capacity){
             return true;
         }
         return false;
     }
 
-    public void addOrders(Order order){
+    public void addOrders(Order order) throws BonVivantException {
         if(!canAcceptOrder()){
             throw new BonVivantException("Running at full capacity, Restaurant can not accept order. Try after some time.");
         }
         this.orderHistory.put(order.getId(), order);
-        currentOrders.addLast(order);
+        orderProcessingQueue.addLast(order);
     }
 
-    public OrderStatus getOrderStatus(Order order) {
+    public OrderStatus getOrderStatus(Order order) throws BonVivantException {
         if(!orderHistory.containsKey(order.getId())){
             throw new BonVivantException("Order is not present. Check order id.");
         }
         return orderHistory.get(order.getId()).getStatus();
+    }
+
+    private Order orderCompleted() {
+        if(orderProcessingQueue.size() == 0){
+            return null;
+        }
+        return orderProcessingQueue.pollFirst();
     }
 
     private Order updateOrderStatus(Order order, OrderStatus status){

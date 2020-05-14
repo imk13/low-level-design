@@ -1,4 +1,4 @@
-package com.bonvivant.enums;
+package enums;
 public enum MenuType {
     VEG,NONVEG,DESERT;
 }
