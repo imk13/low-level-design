@@ -4,3 +4,5 @@
 - [Mychess](https://github.com/imk13/low-level-design/blob/master/mychess.com)
 - [Cab booking system](https://github.com/imk13/low-level-design/blob/master/cab_booking_system)
 - [Food ordering system](https://github.com/imk13/low-level-design/blob/master/food-ordering-system)
+- [Simple Board Snake](https://github.com/imk13/play_snake)
+- [Battleship Game](https://github.com/imk13/battleship_game)
